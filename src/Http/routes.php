@@ -29,15 +29,13 @@ Route::middleware('auth:api')
     Route::get($domainParam.'/3cx/{number}', function($number){
         app('debugbar')->disable();
         return json_encode(array(
-            'contact' => array(
-                'id' => '10',
-                'firstname' => 'FIRSTNAME',
-                'lastname' => 'LASTNAME',
-                'company' => 'COMPANY',
-                'email' => 'EMAIL',
-                'phone' => 'PHONE',
-                'info' => 'INFO !'
-            )
+            'id' => '10',
+            'firstname' => 'FIRSTNAME',
+            'lastname' => 'LASTNAME',
+            'company' => 'COMPANY',
+            'email' => 'EMAIL',
+            'phone' => 'PHONE',
+            'info' => 'INFO !'
         ));
     });
 

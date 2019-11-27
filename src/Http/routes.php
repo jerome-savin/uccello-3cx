@@ -23,14 +23,11 @@ Route::middleware('auth:api')
     // Route::get($domainParam.'/home/my_path', 'MyController@action')->defaults('module', 'home')->name('home.my_path');
 
     // Put your routes here
-    //https://ginkgo.ici/ginkgo/3cx/number=[Number] (GET)
+    //https://ginkgo.ici/ginkgo/3cx/[Number] (GET)
     //https://ginkgo.ici/ginkgo/3cx/create (POST)
 
     Route::get($domainParam.'/3cx/{number}', 'ContactController@retriveContact');
-
-    Route::post($domainParam.'/3cx/create', function(){
-        
-    });
+    Route::post($domainParam.'/3cx/create', 'ContactController@addContact');
 
 });
 

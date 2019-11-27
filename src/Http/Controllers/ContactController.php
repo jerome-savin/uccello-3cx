@@ -9,19 +9,6 @@ use Uccello\Core\Http\Controllers\Core\Controller as UccelloController;
 
 class ContactController extends UccelloController
 {
-    // function($number){
-    //     app('debugbar')->disable();
-    //     return json_encode(array(
-    //         'contact' => array(
-    //             'id' => 10,
-    //             'firstname' => 'FIRSTNAME',
-    //             'lastname' => 'LASTNAME',
-    //             'company' => 'COMPANY',
-    //             'email' => 'EMAIL',
-    //             'phone' => 'PHONE',
-    //             'info' => 'INFO !'
-    //         )
-    //     ));
     function retriveContact($domain, $number, Request $request)
     {
         app('debugbar')->disable();
@@ -29,6 +16,20 @@ class ContactController extends UccelloController
             ->orWhere('mobile', $number)
             ->with('organisation')
             ->first();
+        if(!$contact)
+            return null;
+
         return $contact->toJson();
-    }   
+    }
+
+    function addContact($domain, Request $request)
+    {
+        app('debugbar')->disable();
+        $domain = ucdomain($domain);
+        $contact = new Contact();
+        $data = $request->only($contact->getFillable());
+        $contact->domain_id = $domain->id;
+        $contact->fill($data)->save();
+        return $contact->toJson();
+    }
 }

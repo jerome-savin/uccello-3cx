@@ -12,14 +12,14 @@ class ContactController extends UccelloController
     function retriveContact($domain, $number, Request $request)
     {
         app('debugbar')->disable();
-        $contact = Contact::where('phone', $number)
-            ->orWhere('mobile', $number)
-            ->with('organisation')
-            ->first();
-        if(!$contact)
+        $contacts = Contact::where('phone', 'LIKE', '%'.$number.'%')
+            ->orWhere('mobile', 'LIKE', '%'.$number.'%')
+            // ->with('organisation')
+            ->get();
+        if(count($contacts)<1)
             return null;
 
-        return $contact->toJson();
+        return $contacts->toJson();
     }
 
     function addContact($domain, Request $request)

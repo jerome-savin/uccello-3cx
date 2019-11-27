@@ -1,0 +1,39 @@
+{
+    "name": "jerome-savin/uccello-3cx",
+    "description": "A package to integrate the Uccello's CRM into 3CX (Phone integration PBX)",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jérôme Savin",
+            "email": "jsavin@jsdev.fr"
+        }
+    ],
+    "require": {
+        "uccello/uccello": "1.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "JeromeSavin\\Uccello3cx\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JeromeSavin\\Uccello3cx\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JeromeSavin\\Uccello3cx\\Providers\\AppServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

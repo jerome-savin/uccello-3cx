@@ -26,20 +26,7 @@ Route::middleware('auth:api')
     //https://ginkgo.ici/ginkgo/3cx/number=[Number] (GET)
     //https://ginkgo.ici/ginkgo/3cx/create (POST)
 
-    Route::get($domainParam.'/3cx/{number}', function($number){
-        app('debugbar')->disable();
-        return json_encode(array(
-            'contact' => array(
-                'id' => 10,
-                'firstname' => 'FIRSTNAME',
-                'lastname' => 'LASTNAME',
-                'company' => 'COMPANY',
-                'email' => 'EMAIL',
-                'phone' => 'PHONE',
-                'info' => 'INFO !'
-            )
-        ));
-    });
+    Route::get($domainParam.'/3cx/{number}', 'ContactController@retriveContact');
 
     Route::post($domainParam.'/3cx/create', function(){
         

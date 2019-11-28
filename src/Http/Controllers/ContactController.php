@@ -43,7 +43,7 @@ class ContactController extends UccelloController
             $contact = Contact::find($request->get('contact'));
 
         $callEvent = new CallEvent;
-        $callEvent->type = $request->get('type');
+        $callEvent->type = trans('uccello-3cx::call-event.'.$request->get('type'));
         $callEvent->contact_id = $contact->id ?? null;
         $callEvent->agent = $request->get('agent');
         $callEvent->duration = $request->get('duration');

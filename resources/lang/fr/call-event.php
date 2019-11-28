@@ -25,5 +25,11 @@ return [
     'link' => [
 
     ],
-    'call-event' => 'Journaux d\'appel'
+    'call-event' => 'Journaux d\'appel',
+
+    'Notanswered' => 'Appel émis non répondu',
+    'Missed' => 'Appel reçu manqué',
+    'Outbound' => 'Appel sortant',
+    'Inbound' => 'Appel entrant',
+    'Unknown' => 'Inconnu'    
 ];

@@ -15,7 +15,7 @@ class ContactController extends UccelloController
         app('debugbar')->disable();
         $contacts = Contact::where('phone', 'LIKE', '%'.$number.'%')
             ->orWhere('mobile', 'LIKE', '%'.$number.'%')
-            // ->with('organisation')
+            ->with('organisation')
             ->get();
         if(count($contacts)<1)
             return null;
@@ -36,9 +36,8 @@ class ContactController extends UccelloController
 
     function addCallEvent($domain, Request $request)
     {
+        app('debugbar')->disable();
         $domain = ucdomain($domain);
-
-        dump($request);
 
         if($request->has('contact'))
             $contact = Contact::find($request->get('contact'));
@@ -49,9 +48,7 @@ class ContactController extends UccelloController
         $callEvent->agent = $request->get('agent');
         $callEvent->duration = $request->get('duration');
         $callEvent->domain_id = $domain->id;
-        dump($callEvent);
+
         $callEvent->save();
-        dump('DONE');
-        dd($callEvent);
     }
 }

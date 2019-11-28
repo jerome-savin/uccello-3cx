@@ -10,6 +10,7 @@ use Uccello\Core\Models\Block;
 use Uccello\Core\Models\Field;
 use Uccello\Core\Models\Filter;
 use Uccello\Core\Models\Relatedlist;
+use Uccello\Core\Models\Widget;
 use Uccello\Core\Models\Link;
 
 class CreateCallEventModule extends Migration
@@ -109,6 +110,17 @@ class CreateCallEventModule extends Migration
             'data' => null
         ]);
 
+        // Field date
+        Field::create([
+            'module_id' => $module->id,
+            'block_id' => $block->id,
+            'name' => 'created_at',
+            'uitype_id' => uitype('datetime')->id,
+            'displaytype_id' => displaytype('detail')->id,
+            'sequence' => 0,
+            'data' => null
+        ]);
+
         // Field type
         Field::create([
             'module_id' => $module->id,
@@ -116,7 +128,7 @@ class CreateCallEventModule extends Migration
             'name' => 'type',
             'uitype_id' => uitype('text')->id,
             'displaytype_id' => displaytype('everywhere')->id,
-            'sequence' => 0,
+            'sequence' => 1,
             'data' => json_decode('{"rules":"required"}')
         ]);
 
@@ -127,7 +139,7 @@ class CreateCallEventModule extends Migration
             'name' => 'contact',
             'uitype_id' => uitype('entity')->id,
             'displaytype_id' => displaytype('everywhere')->id,
-            'sequence' => 1,
+            'sequence' => 2,
             'data' => json_decode('{"module":"contact"}')
         ]);
 
@@ -138,7 +150,7 @@ class CreateCallEventModule extends Migration
             'name' => 'agent',
             'uitype_id' => uitype('text')->id,
             'displaytype_id' => displaytype('everywhere')->id,
-            'sequence' => 2,
+            'sequence' => 3,
             'data' => null
         ]);
 
@@ -149,7 +161,7 @@ class CreateCallEventModule extends Migration
             'name' => 'duration',
             'uitype_id' => uitype('text')->id,
             'displaytype_id' => displaytype('everywhere')->id,
-            'sequence' => 3,
+            'sequence' => 4,
             'data' => null
         ]);
 
@@ -164,7 +176,7 @@ class CreateCallEventModule extends Migration
             'user_id' => null,
             'name' => 'filter.all',
             'type' => 'list',
-            'columns' => [ 'type', 'contact', 'agent', 'duration' ],
+            'columns' => [ 'created_at','type', 'contact', 'agent', 'duration' ],
             'conditions' => null,
             'order' => null,
             'is_default' => true,
@@ -176,6 +188,25 @@ class CreateCallEventModule extends Migration
 
     protected function createRelatedLists($module)
     {
+        // Related List relatedlist.productList
+        $relatedModule = Module::where('name', 'contact')->first();
+        
+        Relatedlist::create([
+            'module_id' => $relatedModule->id,
+            'related_module_id' => $module->id,
+            'tab_id' => null,
+            'related_field_id' => $module->fields->where('name', 'contact')->first()->id,
+            'label' => 'relatedlist.callEvents',
+            'type' => 'n-1',
+            'method' => 'getDependentList',
+            'data' => null,
+            'sequence' => 0
+        ]);
+
+        // Add relatedlist widget
+        $widget = Widget::where('label', 'widget.relatedlist')->first();
+        $relatedlist = $relatedModule->relatedlists->where('label', 'relatedlist.callEvents')->first();
+        $relatedModule->widgets()->attach($widget->id, ['data' => json_encode(['id' => $relatedlist->id]), 'sequence' => 1]);
     }
 
     protected function createLinks($module)

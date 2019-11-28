@@ -14,7 +14,8 @@ return [
         'type' => 'Type',
         'contact' => 'Contact',
         'agent' => 'Agent',
-        'duration' => 'Durée de l\'appel'
+        'duration' => 'Durée de l\'appel',
+        'created_at' => 'Date'
     ],
     'field_info' => [
 

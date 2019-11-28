@@ -3,6 +3,7 @@
 namespace JeromeSavin\Uccello3cx\Http\Controllers;
 
 use App\Contact;
+use JeromeSavin\Uccello3cx\Models\CallEvent;
 use Illuminate\Http\Request;
 use Uccello\Core\Models\Domain;
 use Uccello\Core\Http\Controllers\Core\Controller as UccelloController;
@@ -31,5 +32,26 @@ class ContactController extends UccelloController
         $contact->domain_id = $domain->id;
         $contact->fill($data)->save();
         return $contact->toJson();
+    }
+
+    function addCallEvent($domain, Request $request)
+    {
+        $domain = ucdomain($domain);
+
+        dump($request);
+
+        if($request->has('contact'))
+            $contact = Contact::find($request->get('contact'));
+
+        $callEvent = new CallEvent;
+        $callEvent->type = $request->get('type');
+        $callEvent->contact_id = $contact->id ?? null;
+        $callEvent->agent = $request->get('agent');
+        $callEvent->duration = $request->get('duration');
+        $callEvent->domain_id = $domain->id;
+        dump($callEvent);
+        $callEvent->save();
+        dump('DONE');
+        dd($callEvent);
     }
 }

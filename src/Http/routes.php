@@ -25,9 +25,12 @@ Route::middleware('auth:api')
     // Put your routes here
     //https://ginkgo.ici/ginkgo/3cx/[Number] (GET)
     //https://ginkgo.ici/ginkgo/3cx/create (POST)
+    //https://ginkgo.ici/ginkgo/3cx/callEvent (POST)
+
 
     Route::get($domainParam.'/3cx/{number}', 'ContactController@retriveContact');
     Route::post($domainParam.'/3cx/create', 'ContactController@addContact');
+    Route::post($domainParam.'/3cx/callEvent', 'ContactController@addCallEvent');
 
 });
 
